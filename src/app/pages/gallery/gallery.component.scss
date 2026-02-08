@@ -1,0 +1,84 @@
+.container {
+    height: 100vh;
+}
+
+.content {
+    padding: 16px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.card img {
+    height: 180px;
+    object-fit: contain;
+    background: #fafafa;
+}
+
+.summary {
+    min-height: 64px;
+}
+
+.drawer {
+    width: 380px;
+    max-width: 90vw;
+    padding: 12px 16px;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detail-img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    background: #fafafa;
+    border-radius: 12px;
+}
+
+.drawer-content h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.kv {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: #f6f6f6;
+}
+
+.list-loading,
+.drawer-loading {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}

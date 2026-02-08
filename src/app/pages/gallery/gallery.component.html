@@ -1,0 +1,109 @@
+<mat-drawer-container class="container">
+  <mat-drawer #drawer mode="over" position="end" class="drawer" (closed)="selected = null">
+    <ng-container *ngIf="loadingDetail">
+      <div class="drawer-loading">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!loadingDetail && selected">
+      <div class="drawer-header">
+        <h2>{{ selected.name | capitalize }} #{{ selected.id }}</h2>
+        <button mat-icon-button (click)="onClose()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <img [src]="selected.image" [alt]="selected.name" class="detail-img" />
+
+        <h3>Tipos</h3>
+        <mat-chip-set>
+          <mat-chip *ngFor="let t of selected.types">{{ t }}</mat-chip>
+        </mat-chip-set>
+
+        <h3>Habilidades</h3>
+        <mat-chip-set>
+          <mat-chip *ngFor="let a of selected.abilities">{{ a }}</mat-chip>
+        </mat-chip-set>
+
+        <h3>Características</h3>
+        <div class="kv">
+          <div><strong>Altura:</strong> {{ selected.height }}</div>
+          <div><strong>Peso:</strong> {{ selected.weight }}</div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <h3>Stats</h3>
+        <div class="stats">
+          <div class="stat" *ngFor="let s of selected.stats">
+            <span>{{ s.name }}</span>
+            <strong>{{ s.value }}</strong>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-drawer>
+
+  <mat-drawer-content class="content">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1>Pokédex ({{ PAGE_SIZE }} por página)</h1>
+        <span class="muted">Página {{ page }}</span>
+      </div>
+
+      <div class="topbar-right">
+        <mat-form-field appearance="outline" class="goto">
+          <mat-label>Ir a ID</mat-label>
+          <input matInput #idInput type="number" min="1" placeholder="Ej: 154" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="goToId(idInput.value)">
+          Ir
+        </button>
+
+        <button mat-stroked-button (click)="prevPage()" [disabled]="page <= 1">
+          Anterior
+        </button>
+
+        <button mat-stroked-button (click)="nextPage()" [disabled]="page * PAGE_SIZE >= totalCount">
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+
+    <ng-container *ngIf="loadingList">
+      <div class="list-loading">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    </ng-container>
+
+    <div class="grid" *ngIf="!loadingList">
+      <mat-card class="card" *ngFor="let p of pokemons">
+        <img mat-card-image [src]="p.image" [alt]="p.name" />
+        <mat-card-header>
+          <mat-card-title>{{ p.name | capitalize }}</mat-card-title>
+          <mat-card-subtitle>#{{ p.id }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p class="summary">{{ p.summary }}</p>
+
+          <div class="chips-block">
+            <mat-chip-set>
+              <mat-chip *ngFor="let t of p.types">{{ t }}</mat-chip>
+            </mat-chip-set>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" (click)="onOpen(p)">
+            Ver detalle
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
